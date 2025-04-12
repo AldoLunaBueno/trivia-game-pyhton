@@ -19,7 +19,7 @@ class Quiz:
     def add_question(self, question: Question):
         self.questions.append(question)
     
-    def get_next_question(self):
+    def get_next_question(self) -> Question | None:
         if self.current_question_index >= len(self.questions):
             return None
         
@@ -27,7 +27,7 @@ class Quiz:
         self.current_question_index += 1
         return question
     
-    def answer_question(self, question: Question, answer: str | int):
+    def answer_question(self, question: Question, answer: str | int) -> bool:
         if question.is_correct(answer):
             self.correct_answers += 1
             return True
