@@ -3,6 +3,7 @@
 .gitignore
 .gitattributes
 README.md
+CHANGELOG.md
 
 # CI
 .codeclimate.yml
