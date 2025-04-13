@@ -1,15 +1,24 @@
 from typing import List
 
 class Question:
+    """
+    Represents a single trivia question with multiple choice options.
+    """
     def __init__(self, description: str, options: List, correct_answer: int):
         self.description = description
         self.options = options
         self.correct_answer = correct_answer
 
-    def is_correct(self, answer: str | int):
+    def is_correct(self, answer: int) -> bool:
+        """
+        Checks if the given answer is correct.
+        """
         return self.correct_answer == answer
     
 class Quiz:
+    """
+    Manages the flow and state of a trivia game.
+    """
     def __init__(self):
         self.questions: List[Question] = []
         self.current_question_index = 0
@@ -17,9 +26,15 @@ class Quiz:
         self.incorrect_answers = 0
     
     def add_question(self, question: Question):
+        """
+        Adds a new question to the quiz.
+        """
         self.questions.append(question)
     
     def get_next_question(self) -> Question | None:
+        """
+        Retrieves the next question in the quiz.
+        """
         if self.current_question_index >= len(self.questions):
             return None
         
@@ -28,6 +43,9 @@ class Quiz:
         return question
     
     def answer_question(self, question: Question, answer: int) -> bool:
+        """
+        Submits an answer and updates the score.
+        """
         if question.is_correct(answer):
             self.correct_answers += 1
             return True
@@ -36,7 +54,9 @@ class Quiz:
             return False
     
     def run_quiz(self):
-        
+        """
+        Starts the quiz loop and handles user interaction.
+        """
         print("Welcome to the Trivia game!")
         print("Answer to the following questions by selecting the correct option number.\n")
         

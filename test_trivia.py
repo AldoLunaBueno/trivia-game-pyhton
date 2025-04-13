@@ -10,6 +10,9 @@ def test_question_incorrect_answer():
     assert not question.is_correct(2)
 
 def test_quiz_scoring():
+    """
+    Test that the quiz updates the score correctly after a correct answer.
+    """
     quiz = Quiz()
     question = Question("What is 2 + 2", ["1", "2", "3", "4"], 4)
     quiz.add_question(question)
