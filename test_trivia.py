@@ -1,6 +1,8 @@
 import pytest
 from trivia import Quiz, Question
 
+# Basic Question and Quiz tests
+
 def test_question_correct_answer():
     question = Question("What is 2 + 2?", ["1", "2", "3", "4"], 4)
     assert question.is_correct(4)
@@ -30,3 +32,21 @@ def test_quiz_scoring_incorrect():
     assert quiz.answer_question(question, 3) == False
     assert quiz.correct_answers == 0
     assert quiz.incorrect_answers == 1
+
+# Difficulty related tests:
+
+def test_question_default_difficulty():
+    """
+    Test that a question has a default difficulty equals to zero when it isn't specified
+    """
+    question = Question("What is 2 + 2", ["1", "2", "3", "4"], 4)
+    assert question.difficulty == 0
+
+def test_question_difficulty_value():
+    """
+    Test that a question has a difficutly specified by a keyword argument
+    """
+    question = Question("What is 2**2?", ["1", "2", "3", "4"], 4, difficulty = 1)
+    assert question.difficulty == 1
+
+    
