@@ -4,10 +4,11 @@ class Question:
     """
     Represents a single trivia question with multiple choice options.
     """
-    def __init__(self, description: str, options: List, correct_answer: int):
+    def __init__(self, description: str, options: List, correct_answer: int, difficulty = 0):
         self.description = description
         self.options = options
         self.correct_answer = correct_answer
+        self.difficulty = difficulty
 
     def is_correct(self, answer: int) -> bool:
         """
