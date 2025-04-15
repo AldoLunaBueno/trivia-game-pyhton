@@ -1,6 +1,8 @@
 import pytest
 from trivia import Quiz, Question
 
+# Basic Question and Quiz tests
+
 def test_question_correct_answer():
     question = Question("What is 2 + 2?", ["1", "2", "3", "4"], 4)
     assert question.is_correct(4)
@@ -30,3 +32,63 @@ def test_quiz_scoring_incorrect():
     assert quiz.answer_question(question, 3) == False
     assert quiz.correct_answers == 0
     assert quiz.incorrect_answers == 1
+
+# Difficulty related tests:
+
+def test_question_default_difficulty():
+    """
+    Test that a question has a default difficulty equals to zero when it isn't specified
+    """
+    question = Question("What is 2 + 2", ["1", "2", "3", "4"], 4)
+    assert question.difficulty == 0
+
+def test_question_difficulty_value():
+    """
+    Test that a question has a difficutly specified by a keyword argument
+    """
+    question = Question("What is 2**2?", ["1", "2", "3", "4"], 4, difficulty = 1)
+    assert question.difficulty == 1
+    
+def test_quiz_harder_after_correct_streak():
+    """
+    Test that the next question is more difficult only if user answer a number of questions right (streak number)
+    """
+    quiz = Quiz(streak = 2, initial_difficulty = 0)
+    quiz.add_question(Question("Question a", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question b", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question c", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question d", ["1", "2", "3"], 1, difficulty = 1))
+    quiz.add_question(Question("Question e", ["1", "2", "3"], 1, difficulty = 1))
+    quiz.add_question(Question("Question f", ["1", "2", "3"], 1, difficulty = 1))
+    
+    q1 = quiz.get_next_question()
+    quiz.answer_question(q1, 1)
+    q2 = quiz.get_next_question()
+    quiz.answer_question(q2, 1)
+    q3 = quiz.get_next_question()
+    quiz.answer_question(q3, 1)
+    
+    assert q1.difficulty == q2.difficulty == 0
+    assert q3.difficulty == 1
+
+def test_quiz_harder_after_incorrect_streak():
+    """
+    Test that the next question is more difficult only if user answer a number of questions right (streak number)
+    """
+    quiz = Quiz(streak = 2, initial_difficulty = 1)
+    quiz.add_question(Question("Question a", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question b", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question c", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question d", ["1", "2", "3"], 1, difficulty = 1))
+    quiz.add_question(Question("Question e", ["1", "2", "3"], 1, difficulty = 1))
+    quiz.add_question(Question("Question f", ["1", "2", "3"], 1, difficulty = 1))
+    
+    q1 = quiz.get_next_question()
+    quiz.answer_question(q1, 2)
+    q2 = quiz.get_next_question()
+    quiz.answer_question(q2, 2)
+    q3 = quiz.get_next_question()
+    quiz.answer_question(q3, 2)
+    
+    assert q1.difficulty == q2.difficulty == 1
+    assert q3.difficulty == 0
