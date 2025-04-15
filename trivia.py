@@ -94,7 +94,8 @@ class Quiz:
             print(f"Question {self.question_count}: {question.description}")
             for i, option in enumerate(question.options):
                 print(f"  {i+1}) {option}")
-             
+            
+            print(f"(Difficulty: {question.difficulty})")
             answer = int(input("Your answer: "))
             if quiz.answer_question(question, answer):
                 print("Correct! :D")
