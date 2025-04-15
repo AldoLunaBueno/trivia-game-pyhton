@@ -62,8 +62,11 @@ def test_quiz_harder_after_correct_streak():
     quiz.add_question(Question("Question f", ["1", "2", "3"], 1, difficulty = 1))
     
     q1 = quiz.get_next_question()
+    quiz.answer_question(q1, 1)
     q2 = quiz.get_next_question()
+    quiz.answer_question(q2, 1)
     q3 = quiz.get_next_question()
+    quiz.answer_question(q3, 1)
     
     assert q1.difficulty == q2.difficulty == 0
     assert q3.difficulty == 1
@@ -81,8 +84,11 @@ def test_quiz_harder_after_incorrect_streak():
     quiz.add_question(Question("Question f", ["1", "2", "3"], 1, difficulty = 1))
     
     q1 = quiz.get_next_question()
+    quiz.answer_question(q1, 2)
     q2 = quiz.get_next_question()
+    quiz.answer_question(q2, 2)
     q3 = quiz.get_next_question()
+    quiz.answer_question(q3, 2)
     
     assert q1.difficulty == q2.difficulty == 1
     assert q3.difficulty == 0
