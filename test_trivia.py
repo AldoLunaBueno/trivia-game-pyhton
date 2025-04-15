@@ -48,5 +48,41 @@ def test_question_difficulty_value():
     """
     question = Question("What is 2**2?", ["1", "2", "3", "4"], 4, difficulty = 1)
     assert question.difficulty == 1
-
     
+def test_quiz_harder_after_correct_streak():
+    """
+    Test that the next question is more difficult only if user answer a number of questions right (streak number)
+    """
+    quiz = Quiz(streak = 2, initial_difficulty = 0)
+    quiz.add_question(Question("Question a", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question b", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question c", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question d", ["1", "2", "3"], 1, difficulty = 1))
+    quiz.add_question(Question("Question e", ["1", "2", "3"], 1, difficulty = 1))
+    quiz.add_question(Question("Question f", ["1", "2", "3"], 1, difficulty = 1))
+    
+    q1 = quiz.get_next_question()
+    q2 = quiz.get_next_question()
+    q3 = quiz.get_next_question()
+    
+    assert q1.difficulty == q2.difficulty == 0
+    assert q3.difficulty == 1
+
+def test_quiz_harder_after_incorrect_streak():
+    """
+    Test that the next question is more difficult only if user answer a number of questions right (streak number)
+    """
+    quiz = Quiz(streak = 2, initial_difficulty = 1)
+    quiz.add_question(Question("Question a", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question b", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question c", ["1", "2", "3"], 1, difficulty = 0))
+    quiz.add_question(Question("Question d", ["1", "2", "3"], 1, difficulty = 1))
+    quiz.add_question(Question("Question e", ["1", "2", "3"], 1, difficulty = 1))
+    quiz.add_question(Question("Question f", ["1", "2", "3"], 1, difficulty = 1))
+    
+    q1 = quiz.get_next_question()
+    q2 = quiz.get_next_question()
+    q3 = quiz.get_next_question()
+    
+    assert q1.difficulty == q2.difficulty == 1
+    assert q3.difficulty == 0
