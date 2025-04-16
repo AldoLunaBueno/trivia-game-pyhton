@@ -1,5 +1,5 @@
 import os
-os.environ["DATABASE_URL"] = "postgresql://user:123@db:5432/triviadb_test"
+os.environ["DATABASE_URL"] = "postgresql://user:123@db_test:5432/triviadb_test"
 
 
 from fastapi.testclient import TestClient # type: ignore
@@ -23,7 +23,7 @@ def test_create_question():
     response = client.post("/questions/", json={
         "description": "What is 2 + 2?",
         "options": ["1", "2", "3", "4"],
-        "correct_answer": "4",
-        "difficulty": "0"
+        "correct_answer": 4,
+        "difficulty": 0
     })
     assert response.status_code == 201
