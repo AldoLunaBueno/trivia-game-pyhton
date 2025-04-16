@@ -7,9 +7,16 @@ services:
       DATABASE_URL: postgresql://user:123@db:5432/triviadb
     depends_on:
       - db
+      - db_test
   db:
     image: postgres:15
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: triviadb
+  db_test:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: triviadb_test
